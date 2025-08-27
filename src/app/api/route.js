@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 import fs from 'fs';
 import OpenAI from 'openai';
 import { zodTextFormat } from 'openai/helpers/zod';
-import { z } from 'zod';
+// import { z } from 'zod';
 
 // const ExtractedData = z.object({
 //   transport_date: z.string(),
@@ -47,7 +47,7 @@ Sua resposta obrigatoriamente deverá ser um JSON neste formato:
 }
 `;
 
-export async function extractData(instructions) {
+export async function extractData(instructions, document) {
   try {
     const file = await client.files.create({
       file: fs.createReadStream('test.pdf'),
