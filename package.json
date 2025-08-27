@@ -2,6 +2,7 @@
   "name": "fullstack-document-extraction",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -10,7 +11,9 @@
     "lint:fix": "eslint --fix"
   },
   "dependencies": {
+    "dotenv": "^17.2.1",
     "next": "15.5.2",
+    "openai": "^5.16.0",
     "react": "19.1.0",
     "react-dom": "19.1.0"
   },

@@ -2,11 +2,11 @@ export default function Page() {
   return (
     <div className="p-10 flex flex-col items-center rounded-lg shadow-xl gap-4 max-w-md mx-auto">
       <h1 className="text-2xl font-bold">Document Extractor</h1>
-      <p>
+      <p className="text-sm">
         Selecione um documento PDF para fazer upload e extrair as informações em
-        JSON
+        JSON.
       </p>
-      <button class="px-4 py-2 font-bold text-white bg-blue-500 rounded">
+      <button class="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
         Upload
       </button>
     </div>
@@ -26,4 +26,3 @@ export default function Page() {
 //   </button>
 
 // </div>
-<div className="max-w-2xl mx-auto flex flex-col gap-6 p-6 border rounded-lg shadow"></div>;
