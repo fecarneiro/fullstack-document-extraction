@@ -80,7 +80,7 @@ export async function extractData(instructions) {
     console.log(response.output_text);
 
     if (!extractData) throw new Error('Resposta vazia da OpenAI');
-    return JSON.parse(extractData);
+    return;
   } catch (error) {
     console.error(error);
   }
