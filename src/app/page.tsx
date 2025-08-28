@@ -22,7 +22,7 @@ export default function Home() {
       });
 
       const uploadResult = await uploadFile.json();
-      // if (!uploadResult.ok) throw new Error(uploadResult.error);
+      if (!uploadResult.ok) throw new Error(uploadResult.error);
 
       setShowResult(uploadResult.result);
     } catch (e: any) {
@@ -58,17 +58,15 @@ export default function Home() {
       {/* Result */}
       <div className="p-10 flex flex-col items-center rounded-lg shadow-xl gap-4 max-w-md mx-auto">
         <h3>Result</h3>
+        {/* Loading */}
         {loading && (
           <div
             className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
             role="status"
-          >
-            <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
-              Loading...
-            </span>
-          </div>
+          ></div>
         )}
-        <p>{showResult}</p>
+        {/* Display Result */}
+        <p>{JSON.stringify(showResult, null, 2)}</p>
       </div>
     </div>
   );
