@@ -1,3 +1,4 @@
+import { NextRequest, NextResponse } from 'next/server';
 import dotenv from 'dotenv';
 import fs from 'fs';
 import OpenAI from 'openai';
@@ -5,9 +6,16 @@ import OpenAI from 'openai';
 dotenv.config();
 const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
+    const file: File | null = formData.get('file') as unknown as File;
+
+    if (!file) {
+      return NextResponse.json({ success: false });
+    }
+
+    const bytes = await file.arrayBuffer();
 
     const instructions = `
     Extraia deste documento: 
