@@ -1,8 +1,6 @@
 import dotenv from 'dotenv';
 import fs from 'fs';
-import { NextRequest } from 'next/server';
 import OpenAI from 'openai';
-import { zodTextFormat } from 'openai/helpers/zod';
 
 dotenv.config();
 const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
@@ -68,11 +66,11 @@ export async function POST(request: Request) {
       text: { format: { type: 'json_object' } },
     });
 
-    const = response.output_text
-    console.log(response.output_text);
+    const result = response.output_text;
+    console.log(result);
 
-    if (!response) throw new Error('Resposta vazia da OpenAI');
-    return 
+    if (!result) throw new Error('Resposta vazia da OpenAI');
+    return;
   } catch (error) {
     console.error(error);
   }
