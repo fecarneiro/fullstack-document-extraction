@@ -54,7 +54,7 @@ export default function Home() {
       {/* Result */}
       <div className="p-10 flex flex-col items-center rounded-lg shadow-xl gap-4 max-w-md mx-auto">
         <h3>Result</h3>
-        <div>{result}</div>
+        <p>{result}</p>
       </div>
     </div>
   );

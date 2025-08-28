@@ -27,10 +27,10 @@ export async function POST(request: NextRequest) {
     const instructions = `
     Extraia deste documento: 
     - data da emissão
-    - o nome do tomador
-    - o cnpj do tomador
+    - o nome do beneficiário
+    - o cnpj do beneficiário
     - o nome da mercadoria
-    - o valor total da mercadoria
+    - o valor total da mercadoria (nacional)
     - a origem (cidade e estado)
     - destino (cidade e estado).
 
@@ -82,7 +82,7 @@ export async function POST(request: NextRequest) {
     });
 
     const result = response.output_text;
-    // console.log(result);
+    console.log(result);
 
     if (!result) throw new Error('Empty OpenAI response');
 
