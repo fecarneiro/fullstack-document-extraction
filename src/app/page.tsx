@@ -3,6 +3,7 @@
 import { useState } from 'react';
 
 export default function Home() {
+  const [result, setResult] = useState();
   const [file, setFile] = useState<File>();
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -10,15 +11,18 @@ export default function Home() {
     if (!file) return;
 
     try {
-      const data = new FormData();
-      data.set('file', file);
+      const formData = new FormData();
+      formData.set('file', file);
 
-      const uploadResponse = await fetch('/api/upload', {
+      const uploadFile = await fetch('/api/upload', {
         method: 'POST',
-        body: data,
+        body: formData,
       });
-      if (!uploadResponse.ok) throw new Error(await uploadResponse.json());
-      console.log(uploadResponse, 'aeeeeee');
+
+      const uploadResult = await uploadFile.json();
+      // if (!uploadResult.ok) throw new Error(uploadResult.error);
+
+      setResult(uploadResult.result);
     } catch (e: any) {
       console.error(e);
     }
@@ -41,16 +45,17 @@ export default function Home() {
           />
           <input type="submit" value="upload" />
         </form>
-        <div className="p-10 flex flex-col items-center rounded-lg shadow-xl gap-4 max-w-md mx-auto">
-          <h3>Result</h3>
-          <div>{uploadResponse.data}</div>
-        </div>
+
         {/* Old */}
         <button className="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
           Upload
         </button>
       </div>
-      <Result />
+      {/* Result */}
+      <div className="p-10 flex flex-col items-center rounded-lg shadow-xl gap-4 max-w-md mx-auto">
+        <h3>Result</h3>
+        <div>{result}</div>
+      </div>
     </div>
   );
 }

@@ -82,11 +82,16 @@ export async function POST(request: NextRequest) {
     });
 
     const result = response.output_text;
-    console.log(result);
+    // console.log(result);
 
     if (!result) throw new Error('Empty OpenAI response');
-    return NextResponse.json({ success: true });
+
+    return NextResponse.json({
+      result,
+      success: true,
+    });
   } catch (error) {
     console.error(error);
+    return NextResponse.json({ status: 500 });
   }
 }
