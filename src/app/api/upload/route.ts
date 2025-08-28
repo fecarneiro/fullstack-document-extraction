@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import dotenv from 'dotenv';
 import fs from 'fs';
+import { join } from 'path';
 import OpenAI from 'openai';
 
 dotenv.config();
@@ -15,10 +16,12 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: false });
     }
 
-    // this is where the 'common code' stops
-    // and we can use the data in the buffer wherever we want
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
+    // this is where the 'common code' stops
+    // and we can use the data in the buffer wherever we want
+    const path = join('/', 'tmp', file.name);
+    await writeFile(path, buffer);
 
     const instructions = `
     Extraia deste documento: 
@@ -80,8 +83,8 @@ export async function POST(request: NextRequest) {
     const result = response.output_text;
     console.log(result);
 
-    if (!result) throw new Error('Resposta vazia da OpenAI');
-    return;
+    if (!result) throw new Error('Empty OpenAI response');
+    return NextResponse.json({ success: true });
   } catch (error) {
     console.error(error);
   }
