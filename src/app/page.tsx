@@ -3,10 +3,12 @@
 import { useState } from 'react';
 
 export default function Home() {
-  const [result, setResult] = useState();
+  const [showResult, setShowResult] = useState();
+  const [loading, setLoading] = useState(false);
   const [file, setFile] = useState<File>();
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    setLoading(true);
     e.preventDefault();
     if (!file) return;
 
@@ -22,9 +24,11 @@ export default function Home() {
       const uploadResult = await uploadFile.json();
       // if (!uploadResult.ok) throw new Error(uploadResult.error);
 
-      setResult(uploadResult.result);
+      setShowResult(uploadResult.result);
     } catch (e: any) {
       console.error(e);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -54,7 +58,17 @@ export default function Home() {
       {/* Result */}
       <div className="p-10 flex flex-col items-center rounded-lg shadow-xl gap-4 max-w-md mx-auto">
         <h3>Result</h3>
-        <p>{result}</p>
+        {loading && (
+          <div
+            className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+            role="status"
+          >
+            <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+              Loading...
+            </span>
+          </div>
+        )}
+        <p>{showResult}</p>
       </div>
     </div>
   );
