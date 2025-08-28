@@ -34,7 +34,7 @@ export default function Home() {
         throw new Error(`Erro: ${uploadFile.status}`);
       }
 
-      setShowResult(uploadResult.result);
+      setShowResult(uploadResult.parsedResult);
     } catch (e: any) {
       setError('Error processing the document. Try again later.');
       console.error(e);

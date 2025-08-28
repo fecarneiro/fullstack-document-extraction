@@ -92,7 +92,7 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json({
-      result,
+      parsedResult,
       success: true,
     });
   } catch (error) {
