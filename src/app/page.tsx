@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 
 export default function Home() {
@@ -8,15 +10,17 @@ export default function Home() {
     if (!file) return;
 
     try {
-      const data = new FormData()
-      data.set('file', file)
-    }
+      const data = new FormData();
+      data.set('file', file);
 
-    const res = await fetch('/api/upload', {
-      method: 'POST',
-      body: data
-    })
-    if ()
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        body: data,
+      });
+      if (!res.ok) throw new Error(await res.text());
+    } catch (e: any) {
+      console.error(e);
+    }
   };
 
   return (
@@ -34,6 +38,7 @@ export default function Home() {
         />
         <input type="submit" value="upload" />
       </form>
+
       {/* Old */}
       <button className="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
         Upload
