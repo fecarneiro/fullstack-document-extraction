@@ -8,14 +8,17 @@ const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 export async function POST(request: NextRequest) {
   try {
-    const formData = await request.formData();
-    const file: File | null = formData.get('file') as unknown as File;
+    const data = await request.formData();
+    const file: File | null = data.get('file') as unknown as File;
 
     if (!file) {
       return NextResponse.json({ success: false });
     }
 
+    // this is where the 'common code' stops
+    // and we can use the data in the buffer wherever we want
     const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
 
     const instructions = `
     Extraia deste documento: 
@@ -49,8 +52,8 @@ export async function POST(request: NextRequest) {
     }
     `;
 
-    const file = await client.files.create({
-      file: fs.createReadStream('test.pdf'),
+    const readFile = await client.files.create({
+      file: fs.createReadStream(buffer),
       purpose: 'user_data',
     });
 
@@ -62,7 +65,7 @@ export async function POST(request: NextRequest) {
           content: [
             {
               type: 'input_file',
-              file_id: file.id,
+              file_id: readFile.id,
             },
             {
               type: 'input_text',
