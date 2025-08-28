@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import dotenv from 'dotenv';
+import { writeFile } from 'fs/promises';
 import fs from 'fs';
 import { join } from 'path';
 import OpenAI from 'openai';
@@ -56,7 +57,7 @@ export async function POST(request: NextRequest) {
     `;
 
     const readFile = await client.files.create({
-      file: fs.createReadStream(buffer),
+      file: fs.createReadStream(path),
       purpose: 'user_data',
     });
 
