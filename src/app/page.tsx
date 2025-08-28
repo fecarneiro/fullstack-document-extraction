@@ -5,6 +5,7 @@ import { useState } from 'react';
 export default function Home() {
   const [showResult, setShowResult] = useState();
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const [file, setFile] = useState<File>();
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -22,10 +23,10 @@ export default function Home() {
       });
 
       const uploadResult = await uploadFile.json();
-      if (!uploadResult.ok) throw new Error(uploadResult.error);
 
       setShowResult(uploadResult.result);
     } catch (e: any) {
+      setError('Error processing the document. Try again later.');
       console.error(e);
     } finally {
       setLoading(false);
@@ -45,6 +46,7 @@ export default function Home() {
           <input
             type="file"
             name="file"
+            accept="application/pdf"
             onChange={(e) => setFile(e.target.files?.[0])}
           />
           <input type="submit" value="upload" />
@@ -67,6 +69,8 @@ export default function Home() {
         )}
         {/* Display Result */}
         <p>{JSON.stringify(showResult, null, 2)}</p>
+        {/* Display Error */}
+        {error && <div className="text-red-600">{error}</div>}
       </div>
     </div>
   );
