@@ -82,9 +82,14 @@ export async function POST(request: NextRequest) {
     });
 
     const result = response.output_text;
-    console.log(result);
-
     if (!result) throw new Error('Empty OpenAI response');
+
+    let parsedResult;
+    try {
+      parsedResult = JSON.parse(result);
+    } catch (e) {
+      parsedResult;
+    }
 
     return NextResponse.json({
       result,

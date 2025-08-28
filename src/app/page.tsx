@@ -52,13 +52,15 @@ export default function Home() {
           Selecione um documento PDF para fazer upload e extrair as informações
           em JSON.
         </p>
-        {/* File Select */}
-        <form onSubmit={onSubmit}>
+        {/* Form */}
+        <form onSubmit={onSubmit} className="flex flex-col gap-3 w-full">
+          {/* File Select */}
           <input
             type="file"
             name="file"
             accept="application/pdf"
             onChange={(e) => setFile(e.target.files?.[0])}
+            className="text-sm"
           />
           {file && (
             <p className="text-sm text-gray-600">Selected File: {file.name}</p>
@@ -72,27 +74,34 @@ export default function Home() {
           />
         </form>
       </div>
-      {/* Result */}
-      <div className="p-10 flex flex-col items-center rounded-lg shadow-xl gap-4 max-w-md mx-auto">
-        <h3>Result</h3>
-        {/* Loading */}
-        {loading && (
-          <div
-            className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-            role="status"
-          ></div>
-        )}
-        {/* Display Result */}
-        <div>
+      {/* Result - show only if: result, error or loading state */}
+      {(loading || showResult || error) && (
+        <div className="p-10 flex flex-col items-center rounded-lg shadow-xl gap-4 max-w-md mx-auto">
+          <h3 className="text-lg font-semibold">Result</h3>
+
+          {/* Loading */}
+          {loading && (
+            <div
+              className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent"
+              role="status"
+            ></div>
+          )}
+
+          {/* Show Result */}
           {showResult && (
-            <pre className="text-xs text-left bg-gray-100 p-2 rounded">
-              {JSON.stringify(showResult, null, 2)}
-            </pre>
+            <div className="w-full">
+              <pre className="text-xs text-left bg-gray-100 p-4 rounded overflow-auto max-h-96">
+                {JSON.stringify(showResult, null, 2)}
+              </pre>
+            </div>
+          )}
+
+          {/* Error */}
+          {error && (
+            <div className="text-red-600 text-sm text-center">{error}</div>
           )}
         </div>
-        {/* Display Error */}
-        {error && <div className="text-red-600">{error}</div>}
-      </div>
+      )}
     </div>
   );
 }
