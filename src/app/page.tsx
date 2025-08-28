@@ -13,11 +13,12 @@ export default function Home() {
       const data = new FormData();
       data.set('file', file);
 
-      const res = await fetch('/api/upload', {
+      const uploadResponse = await fetch('/api/upload', {
         method: 'POST',
         body: data,
       });
-      if (!res.ok) throw new Error(await res.text());
+      if (!uploadResponse.ok) throw new Error(await uploadResponse.json());
+      console.log(uploadResponse, 'aeeeeee');
     } catch (e: any) {
       console.error(e);
     }
@@ -40,12 +41,16 @@ export default function Home() {
           />
           <input type="submit" value="upload" />
         </form>
-
+        <div className="p-10 flex flex-col items-center rounded-lg shadow-xl gap-4 max-w-md mx-auto">
+          <h3>Result</h3>
+          <div>{uploadResponse.data}</div>
+        </div>
         {/* Old */}
         <button className="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
           Upload
         </button>
       </div>
+      <Result />
     </div>
   );
 }
