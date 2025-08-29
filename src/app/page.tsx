@@ -55,16 +55,24 @@ export default function Home() {
         {/* Form */}
         <form onSubmit={onSubmit} className="flex flex-col gap-3 w-full">
           {/* File Select */}
+          <label
+            htmlFor="file-upload"
+            className={`px-4 py-2 border-2 border-dashed rounded cursor-pointer text-center transition-colors ${
+              file
+                ? 'border-green-500 bg-green-50 text-green-700'
+                : 'border-gray-300 bg-gray-50 text-gray-600 hover:border-gray-400'
+            }`}
+          >
+            {file ? `File Selected: ${file.name}` : 'Click here to select PDF'}
+          </label>
           <input
+            id="file-upload"
             type="file"
             name="file"
             accept="application/pdf"
             onChange={(e) => setFile(e.target.files?.[0])}
-            className="text-sm"
+            className="hidden"
           />
-          {file && (
-            <p className="text-sm text-gray-600">Selected File: {file.name}</p>
-          )}
           {/* File Submit */}
           <input
             type="submit"
