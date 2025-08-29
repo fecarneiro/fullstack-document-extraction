@@ -1,36 +1,124 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Next.js OpenAI Document Extraction
 
-## Getting Started
+A Next.js-based web application for extracting structured data from documents using OpenAI's GPT models. This project allows users to upload documents (e.g., PDFs, images) and retrieve specific information in JSON format, such as dates, names, values, and locations.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **File Upload**: Securely upload documents via a REST API endpoint.
+- **AI-Powered Extraction**: Leverages OpenAI's GPT-4o-mini model for accurate data parsing.
+- **Customizable Prompts**: Easily modify the extraction instructions to target any desired fields or information.
+- **JSON Output**: Returns structured data in a predefined JSON schema.
+- **Next.js Framework**: Built with Next.js for fast, scalable fullstack development.
+- **TypeScript Support**: Fully typed for better development experience.
+
+## Prerequisites
+
+- Node.js (version 18 or higher)
+- npm, yarn, pnpm, or bun
+- OpenAI API key (set in environment variables)
+
+## Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone <repository-url>
+   cd nextjs-openai-doc-extraction
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   # or
+   yarn install
+   # or
+   pnpm install
+   # or
+   bun install
+   ```
+
+3. Set up environment variables:
+   Create a `.env` file in the root directory and add your OpenAI API key:
+
+   ```
+   OPENAI_API_KEY=your_openai_api_key_here
+   ```
+
+4. Run the development server:
+
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   # or
+   pnpm dev
+   # or
+   bun dev
+   ```
+
+   Open [http://localhost:3000](http://localhost:3000) to view the application.
+
+## Usage
+
+1. Upload a document via the frontend or API.
+2. The system extracts data based on the configured prompt.
+3. Receive JSON output with fields like emission date, beneficiary details, goods info, origin, and destination.
+
+### Customizing Extraction Prompts
+
+To extract different information, modify the `instructions` variable in [`src/app/api/upload/route.ts`](src/app/api/upload/route.ts). For example, change the fields in the prompt to target new data points, and update the expected JSON schema accordingly.
+
+Example customization:
+
+```typescript
+const instructions = `
+Extract from this document:
+- Custom field 1
+- Custom field 2
+
+Response must be JSON in this format:
+{
+  "custom_field_1": "",
+  "custom_field_2": ""
+}
+`;
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## API Endpoints
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### POST /api/upload
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Uploads a file and extracts data.
 
-## Learn More
+- **Request**: Multipart form data with a `file` field.
+- **Response**: JSON object with extracted data or error.
 
-To learn more about Next.js, take a look at the following resources:
+Example using curl:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+curl -X POST -F "file=@document.pdf" http://localhost:3000/api/upload
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Build and Deployment
 
-## Deploy on Vercel
+To build for production:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npm run build
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Deploy on Vercel:
+
+1. Push to GitHub.
+2. Connect to Vercel and deploy.
+
+For more details, see [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying).
+
+## Contributing
+
+Contributions are welcome! Please open an issue or submit a pull request.
+
+## License
+
+This project is licensed under the MIT License.
