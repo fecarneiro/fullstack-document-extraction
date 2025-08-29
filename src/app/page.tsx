@@ -31,7 +31,7 @@ export default function Home() {
 
       const uploadResult = await uploadFile.json();
       if (!uploadFile.ok) {
-        throw new Error(`Erro: ${uploadFile.status}`);
+        throw new Error(`Error: ${uploadFile.status}`);
       }
 
       setShowResult(uploadResult.parsedResult);
@@ -47,10 +47,10 @@ export default function Home() {
     <div>
       {/* Main Card - Upload File */}
       <div className="p-10 flex flex-col items-center rounded-lg shadow-xl gap-4 max-w-md mx-auto">
-        <h1 className="text-2xl font-bold">Document Extractor</h1>
+        <h1 className="text-2xl font-bold">Invoice Document Extractor</h1>
         <p className="text-sm">
-          Selecione um documento PDF para fazer upload e extrair as informações
-          em JSON.
+          Select a PDF Brazilian invoice document to upload and extract
+          information in JSON.
         </p>
         {/* Form */}
         <form onSubmit={onSubmit} className="flex flex-col gap-3 w-full">
